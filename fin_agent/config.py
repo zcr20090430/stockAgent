@@ -49,6 +49,23 @@ class Config:
         return config_dir
 
     @staticmethod
+    def get_local_config_path():
+        """Get the path to local_config.json in project root."""
+        return os.path.join(os.getcwd(), "local_config.json")
+
+    @classmethod
+    def load_local_config(cls):
+        """Load local configuration from local_config.json if it exists."""
+        local_config_path = cls.get_local_config_path()
+        if os.path.exists(local_config_path):
+            try:
+                with open(local_config_path, 'r', encoding='utf-8') as f:
+                    return json.load(f)
+            except Exception as e:
+                print(f"Warning: Failed to load local_config.json: {e}")
+        return {}
+
+    @staticmethod
     def get_env_path():
         """Get the full path to the .env file in the user config directory."""
         config_dir = Config.get_config_dir()
@@ -293,14 +310,17 @@ class Config:
 
         tushare_token = input("Enter your Tushare Token: ").strip()
 
+        # Load local config defaults
+        local_config = cls.load_local_config()
+        
         provider = "deepseek"
         deepseek_key = ""
         deepseek_base = "https://api.deepseek.com"
         deepseek_model = "deepseek-chat"
 
-        openai_key = ""
-        openai_base = ""
-        openai_model = ""
+        openai_key = local_config.get("default_openai_key", "")
+        openai_base = local_config.get("default_openai_base", "")
+        openai_model = local_config.get("default_openai_model", "")
         #         self.model = "ep-vkobzg-1767063115499551645"
         print("\nSelect LLM Provider:")
         print("1. DeepSeek (Default)")
