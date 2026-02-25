@@ -321,104 +321,22 @@ class Config:
         openai_key = local_config.get("default_openai_key", "")
         openai_base = local_config.get("default_openai_base", "")
         openai_model = local_config.get("default_openai_model", "")
-        #         self.model = "ep-vkobzg-1767063115499551645"
-        print("\nSelect LLM Provider:")
-        print("1. DeepSeek (Default)")
-        print("2. Moonshot (Kimi)")
-        print("3. ZhipuAI (GLM-4)")
-        print("4. Yi (01.AI)")
-        print("5. Qwen (Aliyun DashScope)")
-        print("6. SiliconFlow (Aggregator)")
-        print("7. OpenRouter")
-        print("8. Custom (Manual Input)")
-        print("9. Local / Self-Hosted (Ollama, LM Studio, etc.)")
-        
-        choice = input("Enter choice (1-9): ").strip()
-        
-        provider = "deepseek"
-        deepseek_key = ""
+
         deepseek_base = "https://api.deepseek.com"
         deepseek_model = "deepseek-chat"
+
         
-        openai_key = ""
-        openai_base = ""
-        openai_model = ""
-        
-        if choice == "1" or not choice:
-            # DeepSeek logic
-            provider = "deepseek"
-            deepseek_key = input("Enter DeepSeek API Key: ").strip()
-        elif choice == "2":  # Moonshot
-            provider = "openai"
-            openai_base = "https://api.moonshot.cn/v1"
-            default_model = "moonshot-v1-8k"
-            print(f"Using Base URL: {openai_base}")
-            openai_key = input("Enter Moonshot API Key: ").strip()
-            openai_model = input(f"Enter Model Name [default: {default_model}]: ").strip() or default_model
-            # DeepSeek logic
-            provider = "deepseek"
-            deepseek_key = input("Enter DeepSeek API Key: ").strip()
-            
-        else:
-            # All others use the generic OpenAI provider logic
-            provider = "openai"
 
-            if choice == "2": # Moonshot
-                openai_base = "https://api.moonshot.cn/v1"
-                default_model = "moonshot-v1-8k"
-                print(f"Using Base URL: {openai_base}")
-                openai_key = input("Enter Moonshot API Key: ").strip()
-                openai_model = input(f"Enter Model Name [default: {default_model}]: ").strip() or default_model
-                
-            elif choice == "3": # ZhipuAI
-                openai_base = "https://open.bigmodel.cn/api/paas/v4"
-                default_model = "glm-4"
-                print(f"Using Base URL: {openai_base}")
-                openai_key = input("Enter ZhipuAI API Key: ").strip()
-                openai_model = input(f"Enter Model Name [default: {default_model}]: ").strip() or default_model
-                
-            elif choice == "4": # Yi
-                openai_base = "https://api.lingyiwanwu.com/v1"
-                default_model = "yi-34b-chat-0205"
-                print(f"Using Base URL: {openai_base}")
-                openai_key = input("Enter Yi API Key: ").strip()
-                openai_model = input(f"Enter Model Name [default: {default_model}]: ").strip() or default_model
-                
-            elif choice == "5": # Qwen
-                openai_base = "https://dashscope.aliyuncs.com/compatible-mode/v1"
-                default_model = "qwen-turbo"
-                print(f"Using Base URL: {openai_base}")
-                openai_key = input("Enter DashScope API Key: ").strip()
-                openai_model = input(f"Enter Model Name [default: {default_model}]: ").strip() or default_model
-                
-            elif choice == "6": # SiliconFlow
-                openai_base = "https://api.siliconflow.cn/v1"
-                default_model = "deepseek-ai/DeepSeek-V3"
-                print(f"Using Base URL: {openai_base}")
-                openai_key = input("Enter SiliconFlow API Key: ").strip()
-                openai_model = input(f"Enter Model Name [default: {default_model}]: ").strip() or default_model
 
-            elif choice == "7": # OpenRouter
-                provider = "openrouter"
-                openai_base = "https://openrouter.ai/api/v1"
-                default_model = "google/gemini-2.0-flash-exp:free"
-                print(f"Using Base URL: {openai_base}")
-                openai_key = input("Enter OpenRouter API Key: ").strip()
-                openai_model = input(f"Enter Model Name [default: {default_model}]: ").strip() or default_model
+        provider = "openai"
 
-            elif choice == "9": # Local
-                provider = "local"
-                default_base = "http://localhost:11434/v1"
-                openai_base = input(f"Enter Base URL [default: {default_base}]: ").strip() or default_base
-                default_model = "llama3"
-                openai_model = input(f"Enter Model Name [default: {default_model}]: ").strip() or default_model
-                openai_key = "ollama" 
+        default_model = "moonshot-v1-8k"
+        print(f"Using Base URL: {openai_base}")
 
-            else: # Custom
-                openai_key = input("Enter API Key: ").strip()
-                openai_base = input("Enter Base URL: ").strip()
-                openai_model = input("Enter Model Name: ").strip()
-        
+        openai_key = local_config.get("default_openai_key", "")
+        openai_base = local_config.get("default_openai_base", "")
+        openai_model = local_config.get("default_openai_model", "")
+
         # Use update_core_config to save
         cls.update_core_config(tushare_token, provider, deepseek_key, deepseek_base, deepseek_model, openai_key, openai_base, openai_model, "Ctrl+Alt+Q")
             
